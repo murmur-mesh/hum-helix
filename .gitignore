@@ -1,0 +1,10 @@
+# python virtual environment
+.venv
+
+# env files
+.env*
+!.env.example
+
+# system files
+.DS_Store
+Thumbs.db
