@@ -1,1 +1,3 @@
-# Hacked together python stt service using whisper
+# hum-helix
+
+Hacked together python stt service using faster-whisper

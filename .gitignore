@@ -5,6 +5,14 @@
 .env*
 !.env.example
 
+# audio files
+*.mp3
+*.wav
+*.ogg
+*.flac
+*.m4a
+*.webm
+
 # system files
 .DS_Store
 Thumbs.db
