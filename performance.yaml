@@ -1,0 +1,23 @@
+# 28s test2.wav
+# vad_filter: False
+# word_timestamps: False
+
+gpu-3060:
+  medium.en:
+    beam-size-1:
+      - segment: 0.5
+        transcription: 0.39
+        total: 0.89
+    beam-size-5:
+      - segment: 0.04
+        transcription: 1.15
+        total: 1.19
+  distil-medium.en:
+    beam-size-1:
+      - segment: 0.04
+        transcription: 0.43
+        total: 0.47
+    beam-size-5:
+      - segment: 0.04
+        transcription: 0.67
+        total: 0.71

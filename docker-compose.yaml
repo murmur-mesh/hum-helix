@@ -1,0 +1,8 @@
+services:
+  hum-helux-test:
+    build: .
+    gpus: all
+    volumes:
+      - hum-helix-models:/models
+volumes:
+  hum-helix-models:
