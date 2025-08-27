@@ -21,6 +21,7 @@ start = time.perf_counter()
 model = WhisperModel(
     "distil-medium.en", "cuda", compute_type="float16", download_root="/models"
 )
+
 # cpu
 # model = WhisperModel("large-v3-turbo", "cpu", compute_type="int8", cpu_threads=8)
 end = time.perf_counter()
