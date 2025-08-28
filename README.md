@@ -1,12 +1,12 @@
 # hum-helix
 
-hum-helix is a local first speech to text (stt) event service designed for distributed AI systems build on top of models like [faster-whisper](https://github.com/SYSTRAN/faster-whisper).
+hum-helix is a local first speech to text (stt) event service designed for distributed AI systems built on top of models like [faster-whisper](https://github.com/SYSTRAN/faster-whisper).
 
-In its current form, it is a hacked together python benchmarking tool and Docker utility for faster whisper, but is evolving into a realtime event node designed to work in orchestration with other even driven AI systems.
+In its current form, it is a hacked together python benchmarking tool and Docker utility for faster-whisper, but is evolving into a realtime event node designed to work in orchestration with other event driven AI systems.
 
 ## Why hum-helix?
 
-This project exists partly to learn by building, but also to fit the architecture vision of smart event driven services.
+This project exists partly to learn by building, but also to fit the architecture vision of a local event driven AI pipeline.
 
 - **Event drive by design**: communicate with other services and logic layers by emitting structured events through Redis, Kafka, and other message bus systems.
 - **Model agnostic / swappable**: switch between various models
