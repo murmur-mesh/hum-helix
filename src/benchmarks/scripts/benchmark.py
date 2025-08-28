@@ -3,11 +3,12 @@ from contextlib import contextmanager
 import yaml
 import wave
 from datetime import datetime
-from timer import Timer
+from src.benchmarks.scripts.timer import Timer
 
 
 print("Running Benchmark Utility\n")
 
+# later used to make the file name somewhat unique
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 print("Loading benchmark config")
