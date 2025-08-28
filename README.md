@@ -1,12 +1,31 @@
 # hum-helix
 
-Hacked together python stt service using faster-whisper.
+hum-helix is a local first speech to text (stt) event service designed for distributed AI systems build on top of models like [faster-whisper](https://github.com/SYSTRAN/faster-whisper).
+
+In its current form, it is a hacked together python benchmarking tool and Docker utility for faster whisper, but is evolving into a realtime event node designed to work in orchestration with other even driven AI systems.
+
+## Why hum-helix?
+
+This project exists partly to learn by building, but also to fit the architecture vision of smart event driven services.
+
+- **Event drive by design**: communicate with other services and logic layers by emitting structured events through Redis, Kafka, and other message bus systems.
+- **Model agnostic / swappable**: switch between various models
+- **Observable**: built in Promethius metrics and a simple live dashboard for real time monitoring.
+- **Local-first**: docker ready, locally deployable on your own hardware.
+
+## Current Status
+
+Right now this project is _very_ **early** and **experimenal**.
+
+Just a minimal benchmark harness around faster whisper and docker, with a light visualization layer.
+
+The vision is to grow into a more polished service.
 
 Named `hum-helix` to fit inside a suite of local AI tools centered around audio first design. Project names may change over time.
 
-## current status
+## The Benchmark Utility
 
-Using `benchmark.py` to run gpu transcription and time benchmarks for various models. Uses a custom yaml config to load benchmark settings, and creates various `faster-whisper` setups to test.
+Using `src/benchmarks/scripts/benchmark.py` to run gpu transcription and time benchmarks for various models. Uses a custom yaml config to load benchmark settings, and creates various [faster-whisper](https://github.com/SYSTRAN/faster-whisper) setups to test.
 
 Writes the yaml output to a static directory in the host machine running docker, currently:
 
@@ -16,27 +35,31 @@ Where `*` is a datetime stamp mostly just to make it somewhat unique.
 
 Using `rsync` to get the results from the host machine.
 
-Currently that is the workflow to run test on a remote machine with a gpu over ssh with a docker context.
+Currently this is the workflow used to run tests on a remote machine with a gpu over ssh within a docker context.
 
-## next up
+Heres an example of the current workflow:
 
-Build a visualization script for consuming benchmark results.
+```bash
+docker coxtent use v1 # v1 my local ssh context
+docker compose up --build # or without --build to rerun test
 
-## long term
+# makefile sync-bench-results localy rsync:
+rsync -avz --progress v1:/opt/hum-helix/benchmark-*.db.yaml ./src/benchmarks/results/
+```
 
-A brief overview of the possible future:
+## Benchmark Results Visualization
 
-- stt whisper (faster-whisper library) wrapped in fast api inside docker
-- stream audio to fast api server from web front end
-- chunk, convert, and combine results for accuracy and real time speed
-- later stream output results in smalller chunks for testing
-- respond to different modes for higher accuracy vs slower speed, and real time uses
+Very bare streamlit pandas table vizualization exists to average metrics and sort them easily.
 
-May look into possibly running a small inference model to test intent, maybe in a rolling way, in order to pick up tool usage, possibly preload or prepare services.
+After gathering yaml results in `src/benchmarks/results/` you can view them aggegated by running:
 
-## benchmark domain terms
+```bash
+uv run streamlit run src/benchmarks/viz/dashboard.py
+```
 
-Terms to refactor and expand code with so it fits benchmarking domain, providing consistenty in communication.
+## Benchmark domain terms
+
+Terms to refactor and expand code with so it fits benchmarking domain, providing consistenty in communication. Will integrate later when relevant.
 
 - **benchmark** - thing you want to measure in specific conditions
 - **system under test** (sut) - whats system is being measured
@@ -62,3 +85,9 @@ Don't really like setuptools egg artifacts, so these are options to explore:
 
 - hatchling
 - flit
+
+## contributions
+
+As you can see this project is in early stage experimental areas, not quite ready for contributions or formal git flow, but feel free to dive into the mess.
+
+Development is currently just a main -> dev -> feature branch style with no formal merging. Just hacking it together right now!
