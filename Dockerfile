@@ -10,11 +10,11 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 ENV PATH="/root/.local/bin:${PATH}"
 
 WORKDIR /app
-
-COPY pyproject.toml uv.lock ./      
+COPY . . 
+# COPY pyproject.toml uv.lock ./      
 RUN uv sync --frozen --python 3.12 --no-dev || uv sync --python 3.12 --no-dev
 
-COPY . .
+
 
 # run test file
 CMD ["uv", "run", "--python", "3.12", "python", "src/benchmarks/scripts/benchmark.py"]
