@@ -21,4 +21,8 @@ Thumbs.db
 
 # temporary machine specific files
 makefile
-bench-results
+src/benchmarks/results
+
+# build stuff
+build/
+dist/
