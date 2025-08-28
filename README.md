@@ -55,3 +55,10 @@ Terms to refactor and expand code with so it fits benchmarking domain, providing
 - **provenance** - everything needed to reproduce the test
 
 May not use all these terms, they are included here for future reference when refactoring a benchmark system. This should be implemented more fully one the system becomes robust, wrapped in api (or standalone cli?), not hacked, but an actual final usable system.
+
+## setuptools alternatives
+
+Don't really like setuptools egg artifacts, so these are options to explore:
+
+- hatchling
+- flit

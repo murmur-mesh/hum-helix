@@ -17,4 +17,4 @@ RUN uv sync --frozen --python 3.12 --no-dev || uv sync --python 3.12 --no-dev
 COPY . .
 
 # run test file
-CMD ["uv", "run", "--python", "3.12", "python", "benchmark.py"]
+CMD ["uv", "run", "--python", "3.12", "python", "src/benchmarks/scripts/benchmark.py"]

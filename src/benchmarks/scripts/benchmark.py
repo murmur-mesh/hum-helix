@@ -3,16 +3,21 @@ from contextlib import contextmanager
 import yaml
 import wave
 from datetime import datetime
-from src.benchmarks.scripts.timer import Timer
+from benchmarks.scripts.timer import Timer
 
 
 print("Running Benchmark Utility\n")
+
+# note on path resolutions in this file:
+# all paths are relative to the project root for docker
+# in the future paths that work in both environments will be used
+# but right its only ever run in docker anyways
 
 # later used to make the file name somewhat unique
 timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
 
 print("Loading benchmark config")
-with open("benchmark.config.yaml", "r") as f:
+with open("./src/benchmarks/configs/benchmark.config.yaml", "r") as f:
     configs = yaml.safe_load(f)
 
 
@@ -36,7 +41,7 @@ for config in configs["benchmarks"]:
         config["load_time"] = t.lap
 
         segments, info = model.transcribe(
-            config["audio_file"],
+            f"./src/benchmarks/workloads/{config['audio_file']}",
             beam_size=config["beam_size"],
             vad_filter=config["vad_filter"],
             word_timestamps=config["word_timestamps"],
@@ -51,7 +56,7 @@ for config in configs["benchmarks"]:
     config["total_time"] = t.elapsed
 
     # get duration of wav file
-    with wave.open(config["audio_file"], "rb") as w:
+    with wave.open(f"./src/benchmarks/workloads/{config['audio_file']}", "rb") as w:
         frames = w.getnframes()
         rate = w.getframerate()
         config["audio_duration"] = frames / float(rate)
