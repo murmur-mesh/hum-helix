@@ -18,3 +18,7 @@ __pycache__
 # system files
 .DS_Store
 Thumbs.db
+
+# temporary machine specific files
+makefile
+bench-results

@@ -1,8 +1,10 @@
 services:
-  hum-helux-test:
+  benchmark:
     build: .
     gpus: all
+    image: hum-helix:latest
     volumes:
       - hum-helix-models:/models
+      - /opt/hum-helix:/app/output
 volumes:
   hum-helix-models:
