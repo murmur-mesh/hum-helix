@@ -1,48 +1,64 @@
 download_root: "/models"
 benchmarks:
   - model: "tiny"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False
     audio_file: "5s.wav"
 
   - model: "tiny.en"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False
     audio_file: "5s.wav"
 
   - model: "base"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False
     audio_file: "5s.wav"
 
   - model: "base.en"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False
     audio_file: "5s.wav"
 
   - model: "small"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False
     audio_file: "5s.wav"
 
   - model: "small.en"
-    compute_type: "int8"
-    device: "cpu"
+    compute_type: "float16"
+    device: "cuda"
+    beam_size: 1
+    vad_filter: False
+    word_timestamps: False
+    audio_file: "5s.wav"
+
+  - model: "medium"
+    compute_type: "float16"
+    device: "cuda"
+    beam_size: 1
+    vad_filter: False
+    word_timestamps: False
+    audio_file: "5s.wav"
+
+  - model: "medium.en"
+    compute_type: "float16"
+    device: "cuda"
     beam_size: 1
     vad_filter: False
     word_timestamps: False

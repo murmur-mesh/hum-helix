@@ -29,8 +29,9 @@ for config in configs["benchmarks"]:
             config["model"],
             config["device"],
             compute_type=config["compute_type"],
+            download_root=configs["download_root"],
         )
-        load_time = t.lap
+        config["load_time"] = t.lap
 
         segments, info = model.transcribe(
             config["audio_file"],
@@ -38,37 +39,33 @@ for config in configs["benchmarks"]:
             vad_filter=config["vad_filter"],
             word_timestamps=config["word_timestamps"],
         )
-        inference_time = t.lap
+        config["inference_time"] = t.lap
 
-        transcription = ""
+        config["transcription"] = ""
         for segment in segments:
-            transcription += segment.text
-        transcription_time = t.lap
+            config["transcription"] += segment.text
+        config["transcription_time"] = t.lap
 
-    total_time = t.elapsed
+    config["total_time"] = t.elapsed
 
     # get duration of wav file
     with wave.open(config["audio_file"], "rb") as w:
         frames = w.getnframes()
         rate = w.getframerate()
-        duration = frames / float(rate)
+        config["audio_duration"] = frames / float(rate)
 
-    total_transcription_time = transcription_time + inference_time
-    config["load_time"] = load_time
-    config["inference_time"] = inference_time
-    config["transcription_time"] = transcription_time
-    config["total_time"] = total_time
-    config["rtf"] = (inference_time + transcription_time) / duration
-    config["total_transcription_time"] = total_transcription_time
-    config["audio_duration"] = duration
-    config["transcription"] = transcription
+    config["total_transcription_time"] = (
+        config["transcription_time"] + config["inference_time"]
+    )
+    config["rtf"] = config["total_transcription_time"] / config["audio_duration"]
+
     print(
-        f"\tBenchmark completed in {total_time:.3f} sec\n",
+        f"\tBenchmark completed in {config["total_time"]:.3f} sec\n",
         f"\tRTF: {config['rtf']:.3f}\n",
-        f"\tModel Work Time: \033[33m{total_transcription_time:.3f} sec\033[0m\n",
+        f"\tModel Work Time: \033[33m{config["total_transcription_time"]:.3f} sec\033[0m\n",
     )
     # append results to benchmark_results.yaml
-    with open("benchmark.db.yaml", "a") as f:
+    with open(configs["download_root"] + "/benchmark.db.yaml", "a") as f:
         yaml.dump([config], f)
 
 print("Done")
