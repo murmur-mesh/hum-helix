@@ -3,24 +3,39 @@ from faster_whisper import WhisperModel
 
 app = FastAPI()
 
+app.state.models = {}
 
-# load a model
+
+# simple ping health check
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
 
 
-# temporarily load whisper for test
-@app.get("/load")
-def load_model():
-    model = WhisperModel("small.en", device="cpu", compute_type="int8")
-    output = model.max_length
-    return {"model.max_length": f"{output}"}
+# simple load model and save to state
+@app.post("/v1/models/{id}:load")
+def load_model(id: str):
+    if app.state.models.get(id) is None:
+        app.state.models[id] = WhisperModel(
+            "small.en", device="cpu", compute_type="int8"
+        )
+        if app.state.models.get(id) is None:
+            return {"error": "failed to load model"}
+    return {"model.id": id}
 
 
-# wrap in api, manually load, simply return an echo
+# simple unload model and save to state
+@app.post("/v1/models/{id}:unload")
+def unload_model(id: str):
+    if app.state.models.get(id) is not None:
+        del app.state.models[id]
+        return {"model.id": id}
+    return {"error": "model not found"}
+
+
+# for starting server with script or directly
 def main():
-    import uvicorn
+    import uvicorn  # unsure if this should import here or globally
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
