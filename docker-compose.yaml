@@ -3,6 +3,8 @@ services:
     build: .
     gpus: all
     image: hum-helix:latest
+    ports:
+      - "8000:8000"
     volumes:
       - hum-helix-models:/models
       - /opt/hum-helix:/app/output
