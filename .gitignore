@@ -21,7 +21,7 @@ Thumbs.db
 
 # temporary machine specific files
 makefile
-src/benchmarks/results
+src/hum_helix/benchmarks/results
 
 # build stuff
 build/
