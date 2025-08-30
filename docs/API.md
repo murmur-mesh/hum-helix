@@ -18,6 +18,16 @@ Async pipelines might look like this:
 ## REST Endpoints
 
 <details>
+ <summary><code>GET /ping</code></summary>
+
+#### Response
+
+```json
+{ "status": "healthy" }
+```
+
+</details>
+<details>
  <summary><code>POST /v1/models/load</code></summary>
 
 #### Body Format
@@ -55,12 +65,20 @@ Async pipelines might look like this:
 </details>
 
 <details>
- <summary><code>GET /ping</code></summary>
+ <summary><code>POST /v1/audio/transcriptions</code></summary>
 
-#### Response
+#### Simple wave file audio upload with form-data multipart upload
+
+#### multipart/form-data
+
+```bash
+file: audio/wave mime content
+```
+
+#### response
 
 ```json
-{ "status": "healthy" }
+{ "text": "transcription of the audio file" }
 ```
 
 </details>
